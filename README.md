@@ -1,6 +1,6 @@
 # cleanAI
 
-Ten Claude Code skills for writing clean, testable, maintainable code. Language-agnostic: drop them into any project on any stack.
+Claude Code skills for writing clean, testable, maintainable code. Language-agnostic: drop them into any project on any stack.
 
 ---
 
