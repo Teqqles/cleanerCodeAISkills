@@ -18,6 +18,7 @@ Ten Claude Code skills for writing clean, testable, maintainable code. Language-
 | [`refactoring`](#refactoring) | Small reversible steps, remove dead code, rename, flatten |
 | [`api-design`](#api-design) | Predictable, minimal, explicit, versioned, mockable interfaces |
 | [`rigor`](#rigor) | Explicit errors, failure-first design, observability, production-readiness |
+| [`highlander-principle`](#highlander-principle) | One author per commit, no co-authors, no AI attribution |
 
 ---
 
@@ -256,6 +257,19 @@ Zero test failures, zero warnings. Fix pre-existing failures; don't defer them.
 - Every commit makes the code clearer, more correct, or more capable
 
 **Triggers:** Writing production code, error handling, external service calls. Mentions of reliability, observability, or "production-ready".
+
+---
+
+### highlander-principle
+
+There can be only one. Every commit has a single author: the human who owns the repository.
+
+- No `Co-Authored-By:` lines
+- No AI tool attribution in commits
+- No secondary authors unless the user explicitly requests it
+- The commit author is the person accountable for the change
+
+**Triggers:** Any commit, commit message, or git workflow. Applies to every project automatically.
 
 ---
 
