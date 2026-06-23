@@ -1,6 +1,6 @@
 # cleanAI
 
-Claude Code skills for writing clean, testable, maintainable code. Language-agnostic: drop them into any project on any stack.
+A shared vocabulary for human and AI collaboration on code quality. Language-agnostic skills that drop into any project on any stack.
 
 ---
 
@@ -18,6 +18,10 @@ Claude Code skills for writing clean, testable, maintainable code. Language-agno
 | [`refactoring`](#refactoring) | Small reversible steps, remove dead code, rename, flatten |
 | [`api-design`](#api-design) | Predictable, minimal, explicit, versioned, mockable interfaces |
 | [`rigor`](#rigor) | Explicit errors, failure-first design, observability, production-readiness |
+| [`patterns`](#patterns) | Design patterns as shared vocabulary: Strategy, Observer, Factory, Adapter, Decorator, Composite |
+| [`anti-patterns`](#anti-patterns) | Code smells and anti-patterns to recognise and avoid |
+| [`loose-coupling`](#loose-coupling) | Loose coupling as a non-negotiable constraint for reuse, maintainability, and extension |
+| [`algorithmic-complexity`](#algorithmic-complexity) | Reports Big O time and space complexity for all non-trivial algorithms |
 | [`highlander-principle`](#highlander-principle) | One author per commit, no co-authors, no AI attribution |
 
 ---
@@ -257,6 +261,77 @@ Zero test failures, zero warnings. Fix pre-existing failures; don't defer them.
 - Every commit makes the code clearer, more correct, or more capable
 
 **Triggers:** Writing production code, error handling, external service calls. Mentions of reliability, observability, or "production-ready".
+
+---
+
+### patterns
+
+Design patterns as a shared language for solving recurring problems. A pattern compresses a complex design into a single name that any developer recognises. The following are common examples, not an exhaustive list. Apply any well-known pattern when you recognise the problem it solves.
+
+- Strategy: replace conditional behaviour with interchangeable implementations
+- Observer: decouple event producers from consumers
+- Factory: encapsulate object creation decisions
+- Adapter: make incompatible interfaces work together
+- Decorator: add behaviour without modifying existing code
+- Composite: treat individuals and collections uniformly
+- Apply only when you can name the problem the pattern solves
+- A pattern applied without the problem it solves is unnecessary complexity
+
+**Triggers:** Designing extensible systems, replacing growing switch/if chains, discussing code design using pattern vocabulary.
+
+---
+
+### anti-patterns
+
+Code smells and anti-patterns: the shared vocabulary for describing what is wrong with code and why it resists change.
+
+- God Class: a class that knows too much and does too much
+- Feature Envy: a method that uses more of another class's data than its own
+- Shotgun Surgery: one logical change requires editing many files
+- Primitive Obsession: bare strings/ints where domain types would communicate intent
+- Long Parameter Lists: too many arguments signals too many responsibilities
+- Flag Arguments: a boolean that selects between two hidden behaviours
+- Inappropriate Intimacy: classes that know too much about each other's internals
+- Speculative Generality: code written for cases that do not exist yet
+- Temporal Coupling: methods that must be called in sequence but do not enforce it
+- Data Clumps: groups of data that travel together but lack a named structure
+
+**Triggers:** Writing or reviewing code. Spotting structural problems. Mentions of "smells", "this feels wrong", or "what's wrong with this".
+
+---
+
+### loose-coupling
+
+Loose coupling as a non-negotiable constraint. Tight coupling is the single largest barrier to reuse, maintainability, and extension.
+
+- Depend on abstractions, never on concretions
+- Law of Demeter: talk only to immediate collaborators, not their internals
+- Tell, Don't Ask: tell objects what to do instead of interrogating their state
+- Interface Segregation: narrow interfaces over broad ones
+- Events and messages over direct calls when modules should not know about each other
+- No shared mutable state between modules
+- Extension without modification: new behaviour arrives as new code, not edits to existing code
+- Three-question test: can I test it alone? Replace it? Reuse it elsewhere?
+
+**Triggers:** Designing multi-module systems. Mentions of extensibility, "hard to change", or code that breaks when unrelated code changes.
+
+---
+
+### algorithmic-complexity
+
+Reports Big O time and space complexity for all non-trivial algorithms. The analysis is a report in the response, not a code comment.
+
+For every non-trivial algorithm, the report states:
+1. **Complexity**: time and space in Big O notation, with variables named
+2. **What this means**: plain-language explanation of practical cost at real input sizes
+3. **Can it be improved?**: whether a better algorithm exists that preserves readability and reusability
+
+- Identifies hidden quadratic behaviour in chained operations
+- Reports amortised vs worst-case when they differ meaningfully
+- States space-time tradeoffs explicitly
+- Never recommends a faster algorithm that sacrifices clarity unless scale demands it
+
+**Triggers:** Writing or reviewing any code involving iteration, sorting, searching, recursion, or data structure construction. Questions about performance or scalability.
 
 ---
 
