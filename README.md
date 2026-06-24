@@ -8,21 +8,23 @@ A shared vocabulary for human and AI collaboration on code quality. Language-agn
 
 | Skill | What it does |
 |---|---|
+| [`algorithmic-complexity`](#algorithmic-complexity) | Reports Big O time and space complexity for all non-trivial algorithms |
+| [`anti-patterns`](#anti-patterns) | Code smells and anti-patterns to recognise and avoid |
+| [`api-design`](#api-design) | Predictable, minimal, explicit, versioned, mockable interfaces |
 | [`clean-code`](#clean-code) | Clarity over cleverness, descriptive names, early returns, no duplication |
 | [`code-style`](#code-style) | Formatting, naming conventions, objective language, security at boundaries |
-| [`git-workflow`](#git-workflow) | Feature branches, Conventional Commits, no co-authors, safety rules |
 | [`dependency-injection`](#dependency-injection) | Inject collaborators, depend on abstractions, composition at the boundary |
-| [`test-driven-development`](#test-driven-development) | Red-green-refactor, test-first, deterministic isolated tests |
-| [`quality-testing`](#quality-testing) | RIGHTBICEP heuristic for coverage across behaviour, boundaries, and failure |
-| [`maintainable-architecture`](#maintainable-architecture) | Separate domain from infrastructure, composition over inheritance |
-| [`refactoring`](#refactoring) | Small reversible steps, remove dead code, rename, flatten |
-| [`api-design`](#api-design) | Predictable, minimal, explicit, versioned, mockable interfaces |
-| [`rigor`](#rigor) | Explicit errors, failure-first design, observability, production-readiness |
-| [`patterns`](#patterns) | Design patterns as shared vocabulary: Strategy, Observer, Factory, Adapter, Decorator, Composite |
-| [`anti-patterns`](#anti-patterns) | Code smells and anti-patterns to recognise and avoid |
-| [`loose-coupling`](#loose-coupling) | Loose coupling as a non-negotiable constraint for reuse, maintainability, and extension |
-| [`algorithmic-complexity`](#algorithmic-complexity) | Reports Big O time and space complexity for all non-trivial algorithms |
+| [`git-workflow`](#git-workflow) | Feature branches, Conventional Commits, no co-authors, safety rules |
 | [`highlander-principle`](#highlander-principle) | One author per commit, no co-authors, no AI attribution |
+| [`liskov-substitution`](#liskov-substitution) | Subtypes must honour the full contract of their base type |
+| [`loose-coupling`](#loose-coupling) | Loose coupling as a non-negotiable constraint for reuse, maintainability, and extension |
+| [`maintainable-architecture`](#maintainable-architecture) | Separate domain from infrastructure, composition over inheritance |
+| [`patterns`](#patterns) | Design patterns as shared vocabulary: Strategy, Observer, Factory, Adapter, Decorator, Composite |
+| [`quality-testing`](#quality-testing) | RIGHTBICEP heuristic for coverage across behaviour, boundaries, and failure |
+| [`refactoring`](#refactoring) | Small reversible steps, remove dead code, rename, flatten |
+| [`rigor`](#rigor) | Explicit errors, failure-first design, observability, production-readiness |
+| [`single-responsibility`](#single-responsibility) | One reason to change per class, module, and function |
+| [`test-driven-development`](#test-driven-development) | Red-green-refactor, test-first, deterministic isolated tests |
 
 ---
 
@@ -83,6 +85,8 @@ ln -s tools/cleanAI/skills .claude/skills
 
 ## Usage
 
+Each skill is self-contained. Install one, a few, or all of them. They work independently and complement each other when combined.
+
 ### Explicit invocation
 
 Type `/` followed by the skill name:
@@ -119,6 +123,57 @@ A typical feature cycle:
 
 ## Skill Reference
 
+### algorithmic-complexity
+
+Reports Big O time and space complexity for all non-trivial algorithms. The analysis is a report in the response, not a code comment.
+
+For every non-trivial algorithm, the report states:
+1. **Complexity**: time and space in Big O notation, with variables named
+2. **What this means**: plain-language explanation of practical cost at real input sizes
+3. **Can it be improved?**: whether a better algorithm exists that preserves readability and reusability
+
+- Identifies hidden quadratic behaviour in chained operations
+- Reports amortised vs worst-case when they differ meaningfully
+- States space-time tradeoffs explicitly
+- Never recommends a faster algorithm that sacrifices clarity unless scale demands it
+
+**Triggers:** Writing or reviewing any code involving iteration, sorting, searching, recursion, or data structure construction. Questions about performance or scalability.
+
+---
+
+### anti-patterns
+
+Code smells and anti-patterns: the shared vocabulary for describing what is wrong with code and why it resists change.
+
+- God Class: a class that knows too much and does too much
+- Feature Envy: a method that uses more of another class's data than its own
+- Shotgun Surgery: one logical change requires editing many files
+- Primitive Obsession: bare strings/ints where domain types would communicate intent
+- Long Parameter Lists: too many arguments signals too many responsibilities
+- Flag Arguments: a boolean that selects between two hidden behaviours
+- Inappropriate Intimacy: classes that know too much about each other's internals
+- Speculative Generality: code written for cases that do not exist yet
+- Temporal Coupling: methods that must be called in sequence but do not enforce it
+- Data Clumps: groups of data that travel together but lack a named structure
+
+**Triggers:** Writing or reviewing code. Spotting structural problems. Mentions of "smells", "this feels wrong", or "what's wrong with this".
+
+---
+
+### api-design
+
+- Consistent behaviour: similar operations work the same way
+- Expose only what callers need
+- No hidden global state or ambient context
+- API vocabulary matches the caller's domain, not the implementation
+- Breaking changes get a version bump or a deprecation window
+- Working examples are the primary documentation
+- Every boundary interface mockable with a small fake
+
+**Triggers:** Designing a public API, library interface, HTTP endpoint, or module boundary. Any interface review.
+
+---
+
 ### clean-code
 
 - Obvious solutions over clever ones
@@ -146,19 +201,6 @@ A typical feature cycle:
 
 ---
 
-### git-workflow
-
-- Feature branches for every change. Never push to `main` directly.
-- Single-author commits, no co-author attribution
-- Conventional Commits: `feat:`, `fix:`, `docs:`, `test:`, `refactor:`, `chore:`
-- Commit messages explain why, not what
-- PRs: small, focused, CI passes, squash merge
-- No force-push, no `--no-verify`, new commits not amends
-
-**Triggers:** Any git operation: committing, branching, PRs, pushing.
-
----
-
 ### dependency-injection
 
 - Classes receive collaborators; they do not construct them
@@ -173,17 +215,94 @@ A typical feature cycle:
 
 ---
 
-### test-driven-development
+### git-workflow
 
-- Write a failing test before any production code
-- Implement only the minimum to pass the test
-- Refactor with all tests green
-- Tests are deterministic, isolated, and fast
-- Mock only stable interfaces; prefer hand-written fakes
-- Test names describe behaviour: `throws_when_order_is_empty`, not `testOrder`
-- The suite must be trusted enough to refactor aggressively
+- Feature branches for every change. Never push to `main` directly.
+- Single-author commits, no co-author attribution
+- Conventional Commits: `feat:`, `fix:`, `docs:`, `test:`, `refactor:`, `chore:`
+- Commit messages explain why, not what
+- PRs: small, focused, CI passes, squash merge
+- No force-push, no `--no-verify`, new commits not amends
 
-**Triggers:** Implementing any new function, class, or feature. Mentions of "write tests", "test first", or "TDD".
+**Triggers:** Any git operation: committing, branching, PRs, pushing.
+
+---
+
+### highlander-principle
+
+There can be only one. Every commit has a single author: the human who owns the repository.
+
+- No `Co-Authored-By:` lines
+- No AI tool attribution in commits
+- No secondary authors unless the user explicitly requests it
+- The commit author is the person accountable for the change
+
+**Triggers:** Any commit, commit message, or git workflow. Applies to every project automatically.
+
+---
+
+### liskov-substitution
+
+Subtypes must honour the full contract of their base type. Code that works with the base type must continue to work correctly with any subtype, without knowing which subtype it received.
+
+- A subtype must not strengthen preconditions (must not reject inputs the base type accepts)
+- A subtype must not weaken postconditions (must not return results the base type would not)
+- A subtype must preserve all invariants of the base type
+- A subtype must not throw exceptions the base type does not permit
+- If calling code uses instanceof/is/type checks, LSP is violated somewhere
+- "Is-a" means "behaves-as", not "shares-fields-with"
+- Write contract tests against the base type and run them against every implementation
+- When a subtype cannot honour the contract, prefer composition or separate interfaces
+
+**Triggers:** Creating subtypes, implementing interfaces, overriding methods. Mentions of "should this extend that" or when you notice subtypes that throw on inherited methods or require callers to check concrete types.
+
+---
+
+### loose-coupling
+
+Loose coupling as a non-negotiable constraint. Tight coupling is the single largest barrier to reuse, maintainability, and extension.
+
+- Depend on abstractions, never on concretions
+- Law of Demeter: talk only to immediate collaborators, not their internals
+- Tell, Don't Ask: tell objects what to do instead of interrogating their state
+- Interface Segregation: narrow interfaces over broad ones
+- Events and messages over direct calls when modules should not know about each other
+- No shared mutable state between modules
+- Extension without modification: new behaviour arrives as new code, not edits to existing code
+- Three-question test: can I test it alone? Replace it? Reuse it elsewhere?
+
+**Triggers:** Designing multi-module systems. Mentions of extensibility, "hard to change", or code that breaks when unrelated code changes.
+
+---
+
+### maintainable-architecture
+
+- Domain logic in its own layer, no framework imports
+- No infrastructure types in core logic
+- Business rules testable without starting the framework
+- Small, cohesive, loosely coupled modules
+- Add behaviour by extending, not by modifying existing code
+- Composition over inheritance
+- Hard to test means wrong boundaries; fix the structure
+
+**Triggers:** Designing a system or feature. Questions about structure, where code belongs, or how to separate concerns.
+
+---
+
+### patterns
+
+Design patterns as a shared language for solving recurring problems. A pattern compresses a complex design into a single name that any developer recognises. The following are common examples, not an exhaustive list. Apply any well-known pattern when you recognise the problem it solves.
+
+- Strategy: replace conditional behaviour with interchangeable implementations
+- Observer: decouple event producers from consumers
+- Factory: encapsulate object creation decisions
+- Adapter: make incompatible interfaces work together
+- Decorator: add behaviour without modifying existing code
+- Composite: treat individuals and collections uniformly
+- Apply only when you can name the problem the pattern solves
+- A pattern applied without the problem it solves is unnecessary complexity
+
+**Triggers:** Designing extensible systems, replacing growing switch/if chains, discussing code design using pattern vocabulary.
 
 ---
 
@@ -208,20 +327,6 @@ Zero test failures, zero warnings. Fix pre-existing failures; don't defer them.
 
 ---
 
-### maintainable-architecture
-
-- Domain logic in its own layer, no framework imports
-- No infrastructure types in core logic
-- Business rules testable without starting the framework
-- Small, cohesive, loosely coupled modules
-- Add behaviour by extending, not by modifying existing code
-- Composition over inheritance
-- Hard to test means wrong boundaries; fix the structure
-
-**Triggers:** Designing a system or feature. Questions about structure, where code belongs, or how to separate concerns.
-
----
-
 ### refactoring
 
 - Leave code cleaner than you found it, every time you touch it
@@ -233,20 +338,6 @@ Zero test failures, zero warnings. Fix pre-existing failures; don't defer them.
 - Refactoring commits contain no behaviour changes
 
 **Triggers:** Requests to clean up, simplify, rename, or improve existing code. Spotting magic values, deep nesting, or misleading names.
-
----
-
-### api-design
-
-- Consistent behaviour: similar operations work the same way
-- Expose only what callers need
-- No hidden global state or ambient context
-- API vocabulary matches the caller's domain, not the implementation
-- Breaking changes get a version bump or a deprecation window
-- Working examples are the primary documentation
-- Every boundary interface mockable with a small fake
-
-**Triggers:** Designing a public API, library interface, HTTP endpoint, or module boundary. Any interface review.
 
 ---
 
@@ -264,87 +355,33 @@ Zero test failures, zero warnings. Fix pre-existing failures; don't defer them.
 
 ---
 
-### patterns
+### single-responsibility
 
-Design patterns as a shared language for solving recurring problems. A pattern compresses a complex design into a single name that any developer recognises. The following are common examples, not an exhaustive list. Apply any well-known pattern when you recognise the problem it solves.
+A class, module, or function should have one reason to change. "One reason to change" means one stakeholder or one axis of business change that would require editing this code.
 
-- Strategy: replace conditional behaviour with interchangeable implementations
-- Observer: decouple event producers from consumers
-- Factory: encapsulate object creation decisions
-- Adapter: make incompatible interfaces work together
-- Decorator: add behaviour without modifying existing code
-- Composite: treat individuals and collections uniformly
-- Apply only when you can name the problem the pattern solves
-- A pattern applied without the problem it solves is unnecessary complexity
+- Identify responsibilities by asking "who requests this change?"
+- Group code by the reason it changes, not by the data it touches
+- If a class has methods that cluster into groups that never call each other, split it
+- A function either orchestrates or does detail work, not both
+- High cohesion is the positive framing: everything in the unit is closely related
+- Do not over-split. One reason to change per class does not mean one method per class
+- The test: when one business requirement changes, you edit one class and nothing else is affected
 
-**Triggers:** Designing extensible systems, replacing growing switch/if chains, discussing code design using pattern vocabulary.
-
----
-
-### anti-patterns
-
-Code smells and anti-patterns: the shared vocabulary for describing what is wrong with code and why it resists change.
-
-- God Class: a class that knows too much and does too much
-- Feature Envy: a method that uses more of another class's data than its own
-- Shotgun Surgery: one logical change requires editing many files
-- Primitive Obsession: bare strings/ints where domain types would communicate intent
-- Long Parameter Lists: too many arguments signals too many responsibilities
-- Flag Arguments: a boolean that selects between two hidden behaviours
-- Inappropriate Intimacy: classes that know too much about each other's internals
-- Speculative Generality: code written for cases that do not exist yet
-- Temporal Coupling: methods that must be called in sequence but do not enforce it
-- Data Clumps: groups of data that travel together but lack a named structure
-
-**Triggers:** Writing or reviewing code. Spotting structural problems. Mentions of "smells", "this feels wrong", or "what's wrong with this".
+**Triggers:** Deciding what belongs in a class, where to split a module, scoping a function. Mentions of "this class is doing too much" or "where does this belong".
 
 ---
 
-### loose-coupling
+### test-driven-development
 
-Loose coupling as a non-negotiable constraint. Tight coupling is the single largest barrier to reuse, maintainability, and extension.
+- Write a failing test before any production code
+- Implement only the minimum to pass the test
+- Refactor with all tests green
+- Tests are deterministic, isolated, and fast
+- Mock only stable interfaces; prefer hand-written fakes
+- Test names describe behaviour: `throws_when_order_is_empty`, not `testOrder`
+- The suite must be trusted enough to refactor aggressively
 
-- Depend on abstractions, never on concretions
-- Law of Demeter: talk only to immediate collaborators, not their internals
-- Tell, Don't Ask: tell objects what to do instead of interrogating their state
-- Interface Segregation: narrow interfaces over broad ones
-- Events and messages over direct calls when modules should not know about each other
-- No shared mutable state between modules
-- Extension without modification: new behaviour arrives as new code, not edits to existing code
-- Three-question test: can I test it alone? Replace it? Reuse it elsewhere?
-
-**Triggers:** Designing multi-module systems. Mentions of extensibility, "hard to change", or code that breaks when unrelated code changes.
-
----
-
-### algorithmic-complexity
-
-Reports Big O time and space complexity for all non-trivial algorithms. The analysis is a report in the response, not a code comment.
-
-For every non-trivial algorithm, the report states:
-1. **Complexity**: time and space in Big O notation, with variables named
-2. **What this means**: plain-language explanation of practical cost at real input sizes
-3. **Can it be improved?**: whether a better algorithm exists that preserves readability and reusability
-
-- Identifies hidden quadratic behaviour in chained operations
-- Reports amortised vs worst-case when they differ meaningfully
-- States space-time tradeoffs explicitly
-- Never recommends a faster algorithm that sacrifices clarity unless scale demands it
-
-**Triggers:** Writing or reviewing any code involving iteration, sorting, searching, recursion, or data structure construction. Questions about performance or scalability.
-
----
-
-### highlander-principle
-
-There can be only one. Every commit has a single author: the human who owns the repository.
-
-- No `Co-Authored-By:` lines
-- No AI tool attribution in commits
-- No secondary authors unless the user explicitly requests it
-- The commit author is the person accountable for the change
-
-**Triggers:** Any commit, commit message, or git workflow. Applies to every project automatically.
+**Triggers:** Implementing any new function, class, or feature. Mentions of "write tests", "test first", or "TDD".
 
 ---
 
