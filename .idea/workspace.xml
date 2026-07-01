@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="98f318b9-dd70-4e33-8958-06bbe74238b4" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution />
+  </component>
+  <component name="EmbeddingIndexingInfo">
+    <option name="cachedIndexableFilesCount" value="98" />
+    <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "pbyrne84"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "git@github.com:pbyrne84/cleanerCodeAISkills.git",
+    "accountId": "54265e23-6e30-484a-a85e-25890c6f511d"
+  }
+}]]></component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
+  <component name="NextEditCompletionFeaturesState">
+    <decayedCancelled>
+      <entry key="MS100" value="1.2135291651088338" />
+      <entry key="MS500" value="2.0401357585203703" />
+      <entry key="S2" value="5.1202754167785445" />
+      <entry key="S5" value="10.437825552251356" />
+      <entry key="S10" value="16.55687165424963" />
+      <entry key="S30" value="29.36115942544583" />
+      <entry key="S60" value="43.39787220433786" />
+      <entry key="M2" value="68.16385742346837" />
+      <entry key="M5" value="107.42093545337391" />
+      <entry key="M10" value="136.76611859503802" />
+      <entry key="M15" value="157.68362638012667" />
+      <entry key="M30" value="198.38715230484547" />
+      <entry key="H1" value="234.25062018000068" />
+      <entry key="H2" value="258.67713480867974" />
+      <entry key="H4" value="273.0117792571011" />
+      <entry key="D1" value="286.2119379174537" />
+      <entry key="W1" value="288.59856647843594" />
+    </decayedCancelled>
+    <decayedSelected>
+      <entry key="MS100" value="0.0" />
+      <entry key="MS500" value="0.0" />
+      <entry key="S2" value="0.0" />
+      <entry key="S5" value="5.95179221446831E-136" />
+      <entry key="S10" value="2.460181129426525E-68" />
+      <entry key="S30" value="3.4920066430766435E-23" />
+      <entry key="S60" value="7.965678145338E-12" />
+      <entry key="M2" value="4.54358224149709E-6" />
+      <entry key="M5" value="0.01684884733876835" />
+      <entry key="M10" value="0.2834165277425473" />
+      <entry key="M15" value="0.7339202639721573" />
+      <entry key="M30" value="1.9106244361761726" />
+      <entry key="H1" value="3.0888168532525393" />
+      <entry key="H2" value="3.9292657639101685" />
+      <entry key="H4" value="4.432240783279715" />
+      <entry key="D1" value="4.900531167042568" />
+      <entry key="W1" value="4.98566682607161" />
+    </decayedSelected>
+    <decayedShown>
+      <entry key="MS100" value="1.1322627451868468" />
+      <entry key="MS500" value="2.0119915134325463" />
+      <entry key="S2" value="5.101081840607909" />
+      <entry key="S5" value="10.420592165398064" />
+      <entry key="S10" value="16.542245523278943" />
+      <entry key="S30" value="29.35237085235115" />
+      <entry key="S60" value="43.39180003736985" />
+      <entry key="M2" value="68.1595674324545" />
+      <entry key="M5" value="107.43511865853857" />
+      <entry key="M10" value="137.04630998674457" />
+      <entry key="M15" value="158.4135024895362" />
+      <entry key="M30" value="200.29338518794665" />
+      <entry key="H1" value="237.336084292775" />
+      <entry key="H2" value="262.6043165199247" />
+      <entry key="H4" value="277.4428567574593" />
+      <entry key="D1" value="291.11225645791774" />
+      <entry key="W1" value="293.5842024433636" />
+    </decayedShown>
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="2" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 1,
+  "fromUser": false
+}]]></component>
+  <component name="ProjectId" id="3FtzNVkc3g93KN9W5i4bfJHV2BX" />
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+    <option name="sortKey" value="BY_TIME_DESCENDING" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "main",
+    "go.import.settings.migrated": "true",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "configurable.group.appearance",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
+      "Scala"
+    ]
+  }
+}]]></component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="98f318b9-dd70-4e33-8958-06bbe74238b4" name="Changes" comment="" />
+      <created>1782909114302</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1782909114302</updated>
+      <workItem from="1782909115655" duration="2075000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
