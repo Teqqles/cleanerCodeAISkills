@@ -72,3 +72,105 @@ src/main/scala/
     ├── User.scala
     └── RegisterUserUseCase.scala
 ```
+
+
+## Don't abuse matching by hiding cyclomatic complexity and values in play.
+Sometimes matching can become very unwieldy, due to the growth of potential combinations.
+Logical branching should be made clear. Matching can hide cyclomatic complexity, so use judiciously.
+
+```scala
+sealed trait UpdateType
+
+case object StatusUpdate extends UpdateType
+
+case object ContactDetailsUpdate extends UpdateType
+
+sealed trait Status
+case object Pending extends Status
+case object Failed extends Status
+case object Succeeded extends Status
+
+case class Update(
+  updateType: UpdateType,
+  maybeNewStatus: Option[Status],
+  maybeFailedStatusComment: Option[String],
+  maybeSucceedStatusComment: Option[String],
+  maybeNewFirstName: Option[String],
+  maybeNewLastName: Option[String]
+)
+
+val update = Update(
+  updateType = StatusUpdate,
+  maybeNewStatus = None,
+  maybeFailedStatusComment = None,
+  maybeSucceedStatusComment = None,
+  maybeNewFirstName = None,
+  maybeNewLastName = None
+)
+
+
+// Business requirements are hidden within the flat structure. A good way to hide bugs. Bugs hide in incoherence.
+//
+// Branching is done on StatusUpdate, but made obscure by flattening logic like this. Needless puzzle
+// Makes knowing what these values represent harder to keep track of. Requires needless memory work.
+// People tend to follow the path of least resistance, so every field/business rule gets added can make
+// it descend into combinatorial explosion in the default clause. 100s of combinations that need to be calculated to
+// debug what it may fail on. Breaks Linus's law due to the high mount of proactive effort to understand, so people
+// will only try to understand it if they are made to.
+update match {
+  case Update(StatusUpdate, Some(Pending), None, None, None, None) =>
+    true
+
+  case Update(StatusUpdate, Some(Failed), Some(_), None, None, None) =>
+    true
+
+  case Update(StatusUpdate, Some(Succeeded), None, Some(_), None, None) =>
+    true
+
+
+  //Clumsy way to do an or on firstname and lastname
+  case Update(ContactDetailsUpdate, None, None, None, Some(_), _) =>
+    true
+
+  case Update(ContactDetailsUpdate, None, None, None, _, Some(_)) =>
+    true
+
+  case _ =>
+    false
+}
+
+// Easily skimmable
+update.updateType match {
+  case StatusUpdate =>
+    if (update.maybeNewFirstName.isDefined || update.maybeNewLastName.isDefined) {
+      false
+    } else {
+      update.maybeNewStatus match {
+        case Some(newStatus) =>
+          newStatus match {
+            case Pending =>
+              update.maybeFailedStatusComment.isEmpty && update.maybeSucceedStatusComment.isEmpty
+
+            case Failed =>
+              update.maybeFailedStatusComment.isDefined && update.maybeSucceedStatusComment.isEmpty
+
+            case Succeeded =>
+              update.maybeFailedStatusComment.isEmpty && update.maybeSucceedStatusComment.isDefined
+          }
+        case None =>
+          false
+      }
+    }
+
+  case ContactDetailsUpdate =>
+    val doesNotHaveUnexpectedValues = update.maybeNewStatus.isEmpty &&
+      update.maybeFailedStatusComment.isEmpty &&
+      update.maybeSucceedStatusComment.isEmpty
+
+    doesNotHaveUnexpectedValues && (update.maybeNewFirstName.isDefined || update.maybeNewLastName.isDefined)
+
+}
+
+
+
+```
